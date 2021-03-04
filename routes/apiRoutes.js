@@ -5,10 +5,10 @@ const uuid = require("uuid");
 
 router.get("/api/notes", (req, res) => {
     res.send(notes);
-})
+});
 
 router.post("/api/notes", (req, res) => {
-
+    // Create note object
     let noteId = uuid.v4();
     let newNote = {
         id: noteId,
@@ -38,13 +38,11 @@ router.delete("/api/notes/:id", (req, res) => {
         const filteredNotes = parsedNotes.filter((note) => note.id != noteId);
 
         // Write the notes without the matching id to db.json
-        fs.writeFile("./db/db.json", JSON.stringify(parsedNotes), err => {
+        fs.writeFile("./db/db.json", JSON.stringify(filteredNotes), err => {
             if (err) throw err;
             res.send(notes);
         });
     });
 });
-
-
 
 module.exports = router;
